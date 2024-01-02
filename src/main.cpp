@@ -4,8 +4,8 @@
 #include <WiFi.h>
 
 // Replace with your network credentials
-const char* ssid = "TPLink_repeat";
-const char* password = "VcnS4ybmz";
+const char* ssid = "LED_control";
+const char* password = "12345678";
 
 // Set web server port number to 80
 WiFiServer server(80);
@@ -35,20 +35,19 @@ void setup() {
   digitalWrite(output17_r, HIGH);
   digitalWrite(output16_b, HIGH);
 
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+  // Set your desired static IP configuration
+  IPAddress localIP(192, 168, 1, 1);  // Change this to your preferred static IP
+  IPAddress gateway(192, 168, 1, 1);  // Change this to your preferred gateway
+  IPAddress subnet(255, 255, 255, 0); // Change this to your preferred subnet mask
 
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
-  }
+  // Create a soft access point with static IP configuration
+  WiFi.softAPConfig(localIP, gateway, subnet);
+  WiFi.softAP(ssid, password);  // Set your own SSID and password
 
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-   
+  Serial.println("Soft AP started");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.softAPIP());
+
   server.begin();
 
 
