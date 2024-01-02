@@ -74,11 +74,17 @@ void loop() {
             client.println("Content-type:text/html");
             client.println();
 
-            client.print("Click <a href=\"/HLb\">here</a> turn the blue LED on<br>"); // BLUE
+            // BLUE
+            client.print("<a href=\"/HLb\"  style=\"display: inline-block; padding: 10px 20px; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; cursor: pointer; border: 2px solid #3498db; color: #3498db; background-color: #ffffff; border-radius: 5px; transition: background-color 0.3s, color 0.3s;\" onmouseover=\"this.style.backgroundColor='#3498db'; this.style.color='#ffffff';\" onmouseout=\"this.style.backgroundColor='#ffffff'; this.style.color='#3498db';\">Blue led</a><br>"); // BLUE
             
-            client.print("Click <a href=\"/HLr\">here</a> turn the red LED on<br>"); // RED
+            // RED
+            client.print("<a href=\"/HLr\"  style=\"display: inline-block; padding: 10px 20px; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; cursor: pointer; border: 2px solid #e74c3c; color: #e74c3c; background-color: #ffffff; border-radius: 5px; transition: background-color 0.3s, color 0.3s;\" onmouseover=\"this.style.backgroundColor='#e74c3c'; this.style.color='#ffffff';\" onmouseout=\"this.style.backgroundColor='#ffffff'; this.style.color='#e74c3c';\">Red led</a><br>"); // RED
 
-            client.print("Click <a href=\"/HLg\">here</a> turn the red LED on<br>"); // GREEN
+            // GREEN
+            client.print("<a href=\"/HLg\"  style=\"display: inline-block; padding: 10px 20px; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; cursor: pointer; border: 2px solid #2ecc71; color: #2ecc71; background-color: #ffffff; border-radius: 5px; transition: background-color 0.3s, color 0.3s;\" onmouseover=\"this.style.backgroundColor='#2ecc71'; this.style.color='#ffffff';\" onmouseout=\"this.style.backgroundColor='#ffffff'; this.style.color='#2ecc71';\">Green led</a><br>"); // GREEN
+
+            // turn everything off
+            client.print("<a href=\"/off\"  style=\"display: inline-block; padding: 10px 20px; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; cursor: pointer; border: 2px solid #000000; color: #000000; background-color: #ffffff; border-radius: 5px; transition: background-color 0.3s, color 0.3s;\" onmouseover=\"this.style.backgroundColor='#000000'; this.style.color='#ffffff';\" onmouseout=\"this.style.backgroundColor='#ffffff'; this.style.color='#000000';\">TURN OFF</a><br>");
 
             client.println();
 
@@ -127,6 +133,19 @@ void loop() {
           currentLine = CL_no_get; // clean the line
         }    
         
+        ////////////////////////////////// TRUN OFF ALL DIODS //////////////////////////////////
+        if (currentLine.endsWith("GET /off")) {
+          digitalWrite(output18_g, HIGH);                // GET /Hr turns the green LED off
+          green_state = false;
+
+          digitalWrite(output17_r, HIGH);                // GET /Hr turns the red LED off
+          red_state = false;
+
+          digitalWrite(output16_b, HIGH);                // GET /Hb turns the blue LED off
+          blue_state = false;
+
+          currentLine = CL_no_get; // clean the line
+        }  
       }
     }
     client.stop();
